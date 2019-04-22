@@ -1,0 +1,108 @@
+@using Microsoft.AspNetCore.Mvc.RazorPages
+@model IEnumerable<Web_App.ViewModels.CandidateViewModel>
+
+@{
+    ViewData["Title"] = "Candidate List";
+    var roleList = ViewData["VacanciesList"] as List<SelectListItem>;
+}
+
+@section header {
+    <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
+        <div class="container">
+            <a class="navbar-brand" asp-area="" asp-controller="Candidate" asp-action="Index">Web_App</a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
+                    aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="navbar-collapse collapse d-sm-inline-flex flex-sm-row-reverse">
+                <ul class="navbar-nav flex-grow-1">
+                    <li class="nav-item">
+                        <a class="nav-link text-dark" asp-area="" asp-controller="Candidate" asp-action="Index">Candidate List</a>
+                    </li>
+                    <li>
+                        <a asp-action="Login" asp-controller="Home"><button type="submit" class="btn btn-primary">Logout</button></a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+}
+
+<div class="text-center">
+    <div style="margin-top: 20px; margin-bottom: 50px">
+    </div>
+    <div class="input-group md-form form-sm form-1 pl-0" style="margin-bottom: 20px">
+        <div class="input-group-prepend">
+            <span class="input-group-text cyan lighten-2" id="basic-text1">
+                <i class="fas fa-search" aria-hidden="true"></i>
+            </span>
+        </div>
+        <form asp-action="Index" asp-controller="Candidate">
+            <input class="form-control my-0 py-1 search" type="text" placeholder="Search" aria-label="Search">
+        </form>
+    </div>
+    <div class="row" style="margin-bottom:50px">
+        <div class="col-md-2 offset-md-8">
+            <select class="form-control sort">
+                <option value="asc" selected>ASC</option>
+                <option value="des">DES</option>
+            </select>
+        </div>
+        <div class="col-md-2">
+            <select class="form-control filter">
+                <option value="0" Selected>All</option>
+                @{
+                    foreach (var role in roleList)
+                    {
+                        <option value="@role.Value">@role.Text</option>
+                    }
+                }
+            </select>
+        </div>
+    </div>
+    <table class="table table-borderless">
+        <thead>
+        <tr>
+            <th scope="col">Name</th>
+            <th scope="col">Vacancy</th>
+            <th scope="col">Phone</th>
+            <th scope="col">Avatar</th>
+            <th scope="col" colspan="2">
+                <a asp-action="Create" asp-controller="Candidate" class="text-primary"><i class="fas fa-user-plus fa-2x"></i></a>
+            </th>
+        </tr>
+        </thead>
+        <tbody>
+        @foreach (var item in Model)
+        {
+            <tr class="content">
+                <td>
+                    @Html.DisplayFor(modelItem => item.Name)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.VacancyName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Phone)
+                </td>
+                <td>
+                    @{
+                        if (item.Avatar != null)
+                        {
+                            <img src="@item.Avatar"/>
+                        }
+                    }
+                </td>
+                <td><a asp-action="Edit" asp-controller="Candidate" asp-route-id="@item.Id" class="text-primary"><i class="fas fa-user-edit"></i></a></td>
+                <td><a asp-action="Delect" asp-controller="Candidate" asp-route-id="@item.Id" class="text-danger bt-remove"><i class="fas fa-user-times"></i></a></td>
+            </tr>
+        }
+        </tbody>
+    </table>
+    <div class="pagination-item"></div>
+</div>
+
+@section Scripts
+{
+    <script src="~/js/index.js" asp-append-version="true"></script>
+}

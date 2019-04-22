@@ -1,0 +1,39 @@
+@model Web_App.ViewModels.UserCreateViewModel
+
+@{
+    ViewData["title"] = "Register";
+    var roleList = ViewData["roleList"] as List<SelectListItem>;
+}
+
+<div class="text-center">
+    <h3 style="margin-top: 20px; margin-bottom:50px">REGISTER FORM</h3>
+    <form asp-action="Register" asp-controller="Home" id="form">
+        <div class="form-row">
+            <div class="form-group col-md-4 offset-md-4">
+                <input asp-for="UserName" type="text" class="form-control" placeholder="User Name">
+            </div>
+            <div class="form-group col-md-4 offset-md-4">
+                <input asp-for="Password" type="password" class="form-control" placeholder="Password">
+            </div>
+            <div class="form-group col-md-4 offset-md-4">
+                <input asp-for="PasswordConfirm" type="password" class="form-control" placeholder="Password Confirm">
+            </div>
+            <div class="form-group col-md-4 offset-md-4">
+                <select asp-for="RoleId" class="form-control" asp-items="@roleList">
+                    <option value="" selected>Role</option>
+                </select>
+            </div>
+            <div class="form-group col-md-2 offset-md-4">
+                <button type="submit" class="btn btn-primary">Register</button>
+            </div>
+            <div class="form-group col-md-2">
+                <a asp-action="Login" asp-controller="Home"><button type="button" class="btn btn-light">Back</button></a>
+            </div>
+        </div>
+    </form>
+</div>
+
+@section Scripts
+{
+    <script src="~/js/register.js" asp-append-version="true"></script>
+}
