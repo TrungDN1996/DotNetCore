@@ -38,7 +38,7 @@ namespace Web_API.Controllers
         }
         
         [Route("create")]
-        [Authorize(Policy = "Admin,")]
+        [Authorize(Policy = "Admin")]
         [HttpPost]
         public ActionResult Create([FromBody]UserDto userDto)
         {
